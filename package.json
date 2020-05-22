@@ -24,6 +24,7 @@
     "knex": "^0.21.1",
     "morgan": "^1.10.0",
     "pg": "^7.12.1",
+    "postgrator-cli": "^3.3.0",
     "xss": "^1.0.6"
   },
   "devDependencies": {
@@ -31,7 +32,6 @@
     "cross-env": "^7.0.2",
     "mocha": "^7.1.2",
     "nodemon": "^2.0.3",
-    "postgrator-cli": "^3.2.0",
     "supertest": "^4.0.2"
   }
 }
