@@ -45,62 +45,94 @@ foldersRouter
             .catch(next)
     })
 
-// foldersRouter
-//     .route('/:note_id')
-//     .all((req, res, next) => {
-//         NoteService.getById(
-//             req.app.get('db'),
-//             req.params.note_id
-//         )
-//             .then(note => {
-//                 if (!note) {
-//                     return res
-//                         .status(404)
-//                         .json({
-//                             error: {
-//                                 message: `Note doesn't exist`
-//                             }
-//                         })
-//                 }
-//                 res.note = note
-//                 next()
-//             })
-//             .catch(next)
-//     })
-//     .get((req, res, next) => {
-//         res.status(200).json(serializeNote(res.note))
-//     })
-//     .delete((req, res, next) => {
-//         NoteService.deleteNote(
-//             req.app.get('db'),
-//             req.params.note_id
-//         )
-//             .then(numRowsAffected => {
-//                 res.status(204).end()
-//             })
-//             .catch(next)
-//     })
-//     .patch(jsonParser, (req, res, next) => {
-//         const { title, content } = req.body
-//         const noteToUpdate = { title, content }
+foldersRouter
+    .route('/:folder_id')
+    .get((req,res,next)=>{
+        FoldersService.getById(
+            req.app.get('db'),
+            req.params.folder_id
+        )
+        .then(note => {
+            if (!note) {
+                return res
+                    .status(404)
+                    .json({
+                        error: {
+                            message: `Note doesn't exist`
+                        }
+                    })
+            }
+            res.note = note
+            next()
+        })
+        .then(()=>{
+            res.status(200).json(serializeNote(res.note))
+        })
+        .catch(next)
+    })
 
-//         const numberOfValues = Object.values(noteToUpdate).filter(Boolean).length
-//         if (numberOfValues === 0) {
-//             return res.json({
-//                 error: {
-//                     message: `Request body must either contain 'title or 'content'`
-//                 }
-//             })
-//         }
-//         NoteService.updateNote(
-//             req.app.get('db'),
-//             req.params.note_id,
-//             noteToUpdate
-//         )
-//         .then(numRowsAffected=> {
-//             res.status(204).end()
-//         })
-//         .catch(next)
-// })
+
+
+
+
+    // .all((req, res, next) => {
+    //     FoldersService.getById(
+    //         req.app.get('db'),
+    //         req.params.folder_id
+    //     )
+    //         .then(folder => {
+    //             if (!folder) {
+    //                 return res
+    //                     .status(404)
+    //                     .json({
+    //                         error: {
+    //                             message: `Folder doesn't exist`
+    //                         }
+    //                     })
+    //             }
+    //             res.folder = folder
+    //             console.log('folder', folder)
+
+    //             next()
+    //         })
+    //         .catch(next)
+    // })
+    // .get((req, res, next) => {
+    //     res.status(200).json(serializeFolder(res.folder))
+    // })
+    // .delete((req, res, next) => {
+    //     FoldersService.deleteFolder(
+    //         req.app.get('db'),
+    //         req.params.folder_id
+    //     )
+    //         .then(numRowsAffected => {
+    //             res.status(204).end()
+    //         })
+    //         .catch(next)
+    // })
+
+
+    // .patch(jsonParser, (req, res, next) => {
+    //     const { folder_name } = req.body
+    //     const folderToUpdate = { folder_name }
+
+    //     const numberOfValues = Object.values(folderToUpdate).filter(Boolean).length
+    //     if (numberOfValues === 0) {
+    //         return res.json({
+    //             error: {
+    //                 message: `Request body must contain 'folder_name`
+    //             }
+    //         })
+    //     }
+    //     FoldersService.updateFolder(
+    //         req.app.get('db'),
+    //         req.params.folder_id,
+    //         folderToUpdate
+    //     )
+    //         .then(numRowsAffected => {
+    //             res.status(204).end()
+    //         })
+    //         .catch(next)
+    // })
 
 module.exports = foldersRouter
