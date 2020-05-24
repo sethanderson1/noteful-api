@@ -61,7 +61,7 @@ notesRouter
                         .status(404)
                         .json({
                             error: {
-                                message: `asdfasdfNote doesn't exist`
+                                message: `Note doesn't exist`
                             }
                         })
                 }

@@ -47,69 +47,69 @@ foldersRouter
 
 foldersRouter
     .route('/:folder_id')
-    .get((req,res,next)=>{
-        FoldersService.getById(
-            req.app.get('db'),
-            req.params.folder_id
-        )
-        .then(note => {
-            if (!note) {
-                return res
-                    .status(404)
-                    .json({
-                        error: {
-                            message: `Note doesn't exist`
-                        }
-                    })
-            }
-            res.note = note
-            next()
-        })
-        .then(()=>{
-            res.status(200).json(serializeNote(res.note))
-        })
-        .catch(next)
-    })
-
-
-
-
-
-    // .all((req, res, next) => {
+    // .get((req,res,next)=>{
     //     FoldersService.getById(
     //         req.app.get('db'),
     //         req.params.folder_id
     //     )
-    //         .then(folder => {
-    //             if (!folder) {
-    //                 return res
-    //                     .status(404)
-    //                     .json({
-    //                         error: {
-    //                             message: `Folder doesn't exist`
-    //                         }
-    //                     })
-    //             }
-    //             res.folder = folder
-    //             console.log('folder', folder)
+    //     .then(folder => {            
+    //         if (!folder) {
+    //             return res
+    //                 .status(404)
+    //                 .json({
+    //                     error: {
+    //                         message: `folder doesn't exist`
+    //                     }
+    //                 })
+    //         }
+    //         res.folder = folder
+    //         next()
+    //     })
+    //     .then(()=>{
+    //         res.status(200).json(serializeFolder(res.folder))
+    //     })
+    //     .catch(next)
+    // })
 
-    //             next()
-    //         })
-    //         .catch(next)
-    // })
-    // .get((req, res, next) => {
-    //     res.status(200).json(serializeFolder(res.folder))
-    // })
-    // .delete((req, res, next) => {
-    //     FoldersService.deleteFolder(
-    //         req.app.get('db'),
-    //         req.params.folder_id
-    //     )
-    //         .then(numRowsAffected => {
-    //             res.status(204).end()
-    //         })
-    //         .catch(next)
-    // })
+
+
+
+
+    .all((req, res, next) => {
+        FoldersService.getById(
+            req.app.get('db'),
+            req.params.folder_id
+        )
+            .then(folder => {
+                if (!folder) {
+                    return res
+                        .status(404)
+                        .json({
+                            error: {
+                                message: `Folder doesn't exist`
+                            }
+                        })
+                }
+                res.folder = folder
+                console.log('folder', folder)
+
+                next()
+            })
+            .catch(next)
+    })
+    .get((req, res, next) => {
+        res.status(200).json(serializeFolder(res.folder))
+    })
+    .delete((req, res, next) => {
+        FoldersService.deleteFolder(
+            req.app.get('db'),
+            req.params.folder_id
+        )
+            .then(numRowsAffected => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
 
 
     // .patch(jsonParser, (req, res, next) => {
