@@ -47,34 +47,6 @@ foldersRouter
 
 foldersRouter
     .route('/:folder_id')
-    // .get((req,res,next)=>{
-    //     FoldersService.getById(
-    //         req.app.get('db'),
-    //         req.params.folder_id
-    //     )
-    //     .then(folder => {            
-    //         if (!folder) {
-    //             return res
-    //                 .status(404)
-    //                 .json({
-    //                     error: {
-    //                         message: `folder doesn't exist`
-    //                     }
-    //                 })
-    //         }
-    //         res.folder = folder
-    //         next()
-    //     })
-    //     .then(()=>{
-    //         res.status(200).json(serializeFolder(res.folder))
-    //     })
-    //     .catch(next)
-    // })
-
-
-
-
-
     .all((req, res, next) => {
         FoldersService.getById(
             req.app.get('db'),
@@ -91,8 +63,6 @@ foldersRouter
                         })
                 }
                 res.folder = folder
-                console.log('folder', folder)
-
                 next()
             })
             .catch(next)
@@ -110,8 +80,6 @@ foldersRouter
             })
             .catch(next)
     })
-
-
     // .patch(jsonParser, (req, res, next) => {
     //     const { folder_name } = req.body
     //     const folderToUpdate = { folder_name }
