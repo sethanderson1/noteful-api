@@ -8,7 +8,7 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "name":"don",
+  "username":"don",
   "password":"password" 
 }
 
@@ -18,7 +18,7 @@ POST http://localhost:8000/users/login
 Content-Type: application/json
 
 {
-  "name":"don",
+  "username":"don",
   "password":"password"
 }
 

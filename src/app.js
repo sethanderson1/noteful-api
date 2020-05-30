@@ -50,7 +50,7 @@ app.use(`/api/folders`, foldersRouter)
 
 app.get('/', (req, res) => {
 
-    res.send(req.user ? `Hi, ${req.user.name}` : 'Hello, world!')
+    res.send(req.user ? `Hi, ${req.user.username}` : 'Hello, world!')
 })
 
 const users = []
@@ -65,7 +65,7 @@ app.post('/users', async (req, res) => {
         const hashedPassword = await bcrypt.hash(req.body.password, salt)
         console.log('salt', salt)
         console.log('hashedPassword', hashedPassword)
-        const user = { name: req.body.name, password: hashedPassword }
+        const user = { username: req.body.username, password: hashedPassword }
         users.push(user)
         res.status(201).send()
     } catch (err) {
@@ -76,15 +76,15 @@ app.post('/users', async (req, res) => {
 
 
 app.post('/users/login', async (req, res) => {
-    const user = users.find(user => user.name === req.body.name)
+    const user = users.find(user => user.username === req.body.username)
     const index = users.indexOf(user)
     if (user == null) {
         return res.status(400).send('cannot find user')
     }
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const username = req.body.name
-            const user = { name: username, index }
+            const username = req.body.username
+            const user = { username: username, index }
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
             res.json({ accessToken: accessToken })
             console.log('accessToken', accessToken)
