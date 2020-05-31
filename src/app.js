@@ -31,7 +31,7 @@ var checkAuthMiddleware = function (req, res, next) {
         try {
             var decoded = jwt.verify(requestJWTToken, process.env.ACCESS_TOKEN_SECRET);
             console.log(`decoded data:`, decoded) // bar
-            
+
         } catch (error) {
             console.log('Bad token!')
         }
@@ -65,7 +65,7 @@ app.post('/users', async (req, res) => {
         const hashedPassword = await bcrypt.hash(req.body.password, salt)
         console.log('salt', salt)
         console.log('hashedPassword', hashedPassword)
-        const user = { username: req.body.username, password: hashedPassword }
+        const user = { username: req.body.username, password: hashedPassword,id: req.body.id }
         users.push(user)
         res.status(201).send()
     } catch (err) {
@@ -78,6 +78,7 @@ app.post('/users', async (req, res) => {
 app.post('/users/login', async (req, res) => {
     const user = users.find(user => user.username === req.body.username)
     const index = users.indexOf(user)
+    console.log('index', index)
     if (user == null) {
         return res.status(400).send('cannot find user')
     }
